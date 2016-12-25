@@ -17,15 +17,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-        productFlavors{
-                inmemory{
-                        applicationId "com.example.yora.inmemory"
-                    }
+    productFlavors {
+        inmemory {
+            applicationId "com.example.yora.inmemory"
+        }
 
-                        live{
-                                applicationId "com.example.yora"
-                            }
-            }
+        live {
+            applicationId "com.example.yora"
+        }
+    }
 }
 
 dependencies {

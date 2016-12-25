@@ -3,7 +3,6 @@ package com.example.yora.views;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.yora.R;
 import com.example.yora.activities.BaseActivity;
@@ -30,7 +29,7 @@ public class MainNavDrawer extends NavDrawer {
         addItem(new BasicNavDrawerItem("Logout", null, R.drawable.ic_action_backspace, R.id.include_main_nav_drawer_bottomItems) {
             @Override
             public void onClick(View view) {
-                Toast.makeText(activity, "You have logged out!", Toast.LENGTH_SHORT).show();
+                activity.getYoraApplication().getAuth().logout();
                 navDrawer.setOpen(false);
             }
         });
@@ -41,11 +40,12 @@ public class MainNavDrawer extends NavDrawer {
         User loggedInUser = activity.getYoraApplication().getAuth().getUser();
         _displayNameText.setText(loggedInUser.getDisplayName());
 
-        // TODO: change avatar image to avatarUrl from loggedInUser
+        // TODO change avatar image to avatarUrl from loggedInUser
     }
 
     @Subscribe
     public void UserDetailsUpdated(Account.UserDetailsUpdatedEvent event){
+        // TODO update avatar URL
         _displayNameText.setText(event.User.getDisplayName());
     }
 }
