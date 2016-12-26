@@ -5,9 +5,8 @@ import com.example.yora.services.entities.ContactRequest;
 import com.example.yora.services.entities.UserDetails;
 
 import java.util.List;
-// final 不能继承
+
 public final class Contacts {
-    // private 不能实例化
     private Contacts() {
     }
 

@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.View;
 
+import com.example.yora.infrastructure.ActionScheduler;
 import com.example.yora.infrastructure.YoraApplication;
 import com.example.yora.R;
 import com.example.yora.views.NavDrawer;
@@ -20,17 +21,35 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected NavDrawer navDrawer;
     protected boolean isTablet;
     protected Bus bus;
+    protected ActionScheduler scheduler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         application = (YoraApplication) getApplication();
         bus = application.getBus();
+        scheduler = new ActionScheduler(application);
 
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         isTablet = (metrics.widthPixels / metrics.density) >= 600;
 
         bus.register(this);
+    }
+
+    public ActionScheduler getScheduler() {
+        return scheduler;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        scheduler.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        scheduler.onPause();
     }
 
     @Override
