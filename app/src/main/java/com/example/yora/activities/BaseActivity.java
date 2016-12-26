@@ -61,7 +61,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (_isRegisteredWithBus) {
             bus.unregister(this);
             _isRegisteredWithBus = false;
-//            _isRegisteredWithBus = true;
         }
         if (navDrawer != null)
             navDrawer.destroy();
@@ -77,7 +76,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (_isRegisteredWithBus) {
             bus.unregister(this);
             _isRegisteredWithBus = false;
-//            _isRegisteredWithBus = true;
         }
     }
 
