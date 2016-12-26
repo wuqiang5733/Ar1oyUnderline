@@ -2,11 +2,10 @@ package com.example.yora.activities;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
-import android.app.Fragment;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import android.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,7 +18,7 @@ import com.example.yora.fragments.PendingContactRequestsFragment;
 import com.example.yora.views.MainNavDrawer;
 
 public class ContactsActivity extends BaseAuthenticatedActivity implements AdapterView.OnItemSelectedListener {
-    private ObjectAnimator _currentAnimation;  //创建一个动画
+    private ObjectAnimator _currentAnimation;
     private ArrayAdapter<ContactsSpinnerItem> _adapter;
 
     @Override
@@ -27,20 +26,18 @@ public class ContactsActivity extends BaseAuthenticatedActivity implements Adapt
         setContentView(R.layout.activity_contacts);
         setNavDrawer(new MainNavDrawer(this));
 
-        //Spinner 的用法是一个 ListView
         _adapter = new ArrayAdapter<>(this, R.layout.list_item_toolbar_spinner); // The layout used when spinner is not open
         _adapter.setDropDownViewResource(android.R.layout.simple_list_item_1); // The layout used in spinner drop down state
         _adapter.add(new ContactsSpinnerItem("Contacts", Color.parseColor("#00BCD4"), ContactsFragment.class));
         _adapter.add(new ContactsSpinnerItem(
                 "Pending Contact Requests",
-                ContextCompat.getColor(this,R.color.contacts_pending_contacts_request), // Just for demonstration
-//                getResources().getColor(R.color.contacts_pending_contacts_request), // Just for demonstration
+                getResources().getColor(R.color.contacts_pending_contacts_request), // Just for demonstration
                 PendingContactRequestsFragment.class));
 
         Spinner spinner = (Spinner) findViewById(R.id.activity_contacts_spinner);
         spinner.setAdapter(_adapter);
         spinner.setOnItemSelectedListener(this);
-            // 因为 Toolbar 与 Spinner 的位置是重叠的
+
         getSupportActionBar().setTitle(null); // Because we use spinner in place of title
     }
 

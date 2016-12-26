@@ -16,6 +16,8 @@ import com.example.yora.views.NavDrawer;
 import com.squareup.otto.Bus;
 
 public abstract class BaseActivity extends AppCompatActivity {
+    private boolean _isRegisteredWithBus;
+
     protected YoraApplication application;
     protected Toolbar toolbar;
     protected NavDrawer navDrawer;
@@ -34,6 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         isTablet = (metrics.widthPixels / metrics.density) >= 600;
 
         bus.register(this);
+        _isRegisteredWithBus = true;
     }
 
     public ActionScheduler getScheduler() {
@@ -55,9 +58,27 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        bus.unregister(this);
+        if (_isRegisteredWithBus) {
+            bus.unregister(this);
+            _isRegisteredWithBus = false;
+//            _isRegisteredWithBus = true;
+        }
         if (navDrawer != null)
             navDrawer.destroy();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+
+        // onDestroy might not be called after the activity is finished, so this ensures
+        // immediate unregistering from the bus and prevents unwanted issues.
+        // It seems that "finish" is also called internally by the system in most scenarios
+        if (_isRegisteredWithBus) {
+            bus.unregister(this);
+            _isRegisteredWithBus = false;
+//            _isRegisteredWithBus = true;
+        }
     }
 
     @Override
