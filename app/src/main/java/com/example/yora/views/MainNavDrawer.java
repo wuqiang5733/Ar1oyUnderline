@@ -3,6 +3,7 @@ package com.example.yora.views;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.yora.R;
 import com.example.yora.activities.BaseActivity;

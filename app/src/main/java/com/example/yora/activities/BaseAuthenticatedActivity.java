@@ -10,10 +10,8 @@ public abstract class BaseAuthenticatedActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         if (!application.getAuth().getUser().isLoggedIn()) {
-            //下面是自动登陆的代码
             if (application.getAuth().hasAuthToken()) {
                 Intent intent = new Intent(this, AuthenticationActivity.class);
-                //下面是 不管在那个界面下（Activity),自动登陆之后，都可以返回
                 intent.putExtra(AuthenticationActivity.EXTRA_RETURN_TO_ACTIVITY, getClass().getName());
                 startActivity(intent);
             } else {

@@ -18,9 +18,8 @@ public class AuthenticationActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
-        // 下面的 _auth 是 Refactor 自动生成的
+
         _auth = application.getAuth();
-        //如果没有Token ，就去手动登陆
         if (!_auth.hasAuthToken()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
@@ -32,7 +31,6 @@ public class AuthenticationActivity extends BaseActivity {
 
     @Subscribe
     public void onLoginWithLocalToken(Account.LoginWithLocalTokenResponse response) {
-        //如果由于某种原因 Token 找不到了，那就去手动登陆。
         if (!response.didSucceed()) {
             Toast.makeText(this, "Please login again", Toast.LENGTH_SHORT).show();
             _auth.setAuthToken(null);
@@ -40,7 +38,6 @@ public class AuthenticationActivity extends BaseActivity {
             finish();
         }
         else {
-            // 自动登陆成功之后，可以返回到之前的界面，查看 BaseAuthenticatedActivity
             String returnTo = getIntent().getStringExtra(EXTRA_RETURN_TO_ACTIVITY);
             Intent intent = new Intent(this, MainActivity.class);
             if (returnTo != null) {
