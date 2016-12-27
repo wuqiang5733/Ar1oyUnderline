@@ -1,10 +1,10 @@
 package com.example.yora.infrastructure;
 
 import android.os.Handler;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class ActionScheduler {
     private final YoraApplication _application;
@@ -32,7 +32,8 @@ public class ActionScheduler {
             callback.schedule();
         }
 
-        for (Runnable runnable : _onResumeActions.values()) {
+       for (Runnable runnable : _onResumeActions.values()) {
+            Log.e("ActionScheduler","onResume_WQ");
             runnable.run();
         }
         _onResumeActions.clear();

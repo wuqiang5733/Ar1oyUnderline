@@ -2,6 +2,7 @@ package com.example.yora.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -69,7 +70,7 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
                             }
                         })
                         .start();
-
+                Log.e("ContactsFragment","onContactsResponse_WQ");
                 _adapter.clear();
                 _adapter.addAll(response.contacts);
             }
