@@ -25,8 +25,7 @@ public class ContactRequestAdapter extends ArrayAdapter<ContactRequest> {
     public View getView(int position, View convertView, ViewGroup parent) {
         ContactRequest request = getItem(position);
         ViewHolder view;
-        if (convertView == null) { // 这句可以简单的理解成有没有 Recycler
-            // 如果没有，那就得实例化，inflate 了 。
+        if (convertView == null) {
             convertView = _inflater.inflate(R.layout.list_item_contact_request, parent, false);
             view = new ViewHolder(convertView);
             convertView.setTag(view);
@@ -39,7 +38,7 @@ public class ContactRequestAdapter extends ArrayAdapter<ContactRequest> {
                .load(request.getUser().getAvatarUrl())
                .into(view.Avatar);
         String createdAt = DateUtils.formatDateTime(
-                getContext(), // 生成时间
+                getContext(),
                 request.getCreatedAt().getTimeInMillis(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);
 

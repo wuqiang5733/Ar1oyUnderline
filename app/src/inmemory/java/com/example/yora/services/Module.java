@@ -7,5 +7,6 @@ public class Module {
         // It won't be garbage collected because Bus holds a reference to it
         new InMemoryAccountService(application);
         new InMemoryContactService(application);
+        new InMemoryMessageService(application);
     }
 }

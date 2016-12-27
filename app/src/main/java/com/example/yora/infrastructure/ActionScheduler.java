@@ -1,7 +1,6 @@
 package com.example.yora.infrastructure;
 
 import android.os.Handler;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,8 +31,7 @@ public class ActionScheduler {
             callback.schedule();
         }
 
-       for (Runnable runnable : _onResumeActions.values()) {
-            Log.e("ActionScheduler","onResume_WQ");
+        for (Runnable runnable : _onResumeActions.values()) {
             runnable.run();
         }
         _onResumeActions.clear();

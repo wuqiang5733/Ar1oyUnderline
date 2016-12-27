@@ -31,7 +31,7 @@ public final class Contacts {
     }
 
     public static class GetContactsResponse extends ServiceResponse{
-        public List<UserDetails> contacts;
+        public List<UserDetails> Contacts;
     }
 
     public static class SendContactRequestRequest {
