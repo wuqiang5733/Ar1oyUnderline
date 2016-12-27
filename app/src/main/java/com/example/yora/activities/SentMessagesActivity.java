@@ -56,7 +56,7 @@ public class SentMessagesActivity extends BaseAuthenticatedActivity implements M
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode != REQUEST_VIEW_MESSAGE || resultCode != MessageActivity.REQUEST_MESSAGE_DELETED) {
+        if (requestCode != REQUEST_VIEW_MESSAGE || resultCode != MessageActivity.RESULT_MESSAGE_DELETED) {
             return;
         }
 
@@ -77,8 +77,11 @@ public class SentMessagesActivity extends BaseAuthenticatedActivity implements M
 
     @Subscribe
     public void onMessagesLoaded(final Messages.SeacrhMessagesResponse response) {
-        response.showErrorToast(SentMessagesActivity.this);
-        _progressFrame.setVisibility(View.GONE);
+        _progressFrame.setVisibility(View.GONE);  //把缓冲圈去掉
+        if (!response.didSucceed()) {
+            response.showErrorToast(this);
+            return;
+        }
         int oldMessagesSize = _messages.size();
         _messages.clear();
         _adapter.notifyItemRangeRemoved(0, oldMessagesSize);

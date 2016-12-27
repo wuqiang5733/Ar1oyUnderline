@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 
 import com.example.yora.R;
 import com.example.yora.dialogs.ChangePasswordDialog;
@@ -164,10 +162,9 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
                 outputFileUri = tempFileUri; // User took a picture
 
             new Crop(outputFileUri)
-            .asSquare()
-            .output(tempFileUri)
-            
-            .start(this);
+                    .asSquare()
+                    .output(tempFileUri)
+                    .start(this);
         } else if (requestCode == Crop.REQUEST_CROP) {
             _avatarProgressFrame.setVisibility(View.VISIBLE);
             bus.post(new Account.ChangeAvatarRequest(tempFileUri));

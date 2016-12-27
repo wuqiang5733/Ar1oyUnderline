@@ -57,4 +57,16 @@ public final class Contacts {
 
     public static class RespondToContactRequestResponse extends ServiceResponse {
     }
+
+    public static class RemoveContactRequest {
+        public int ContactId;
+
+        public RemoveContactRequest(int contactId) {
+            ContactId = contactId;
+        }
+    }
+
+    public static class RemoveContactResponse extends ServiceResponse {
+        public int RemovedContactId;
+    }
 }

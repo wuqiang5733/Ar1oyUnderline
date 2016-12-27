@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/activity_contact_menuNewMessage"
+        android:icon="@drawable/ic_action_reply"
+        android:title="New Message"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/activity_contact_menuRemoveContact"
+        android:icon="@drawable/ic_action_delete"
+        android:title="Remove"/>
+
+</menu>
