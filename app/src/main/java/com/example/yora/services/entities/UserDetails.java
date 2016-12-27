@@ -1,6 +1,9 @@
 package com.example.yora.services.entities;
 
-public class UserDetails {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class UserDetails implements Parcelable {
     private int _id;
     private boolean _isContact;
     private String _displayName;
@@ -34,4 +37,25 @@ public class UserDetails {
     public String getAvatarUrl() {
         return _avatarUrl;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+    }
+
+    public static final Creator<UserDetails> CREATOR = new Creator<UserDetails>() {
+        @Override
+        public UserDetails createFromParcel(Parcel source) {
+            return new UserDetails(0, false, null, null, null);
+        }
+
+        @Override
+        public UserDetails[] newArray(int size) {
+            return new UserDetails[0];
+        }
+    };
 }
