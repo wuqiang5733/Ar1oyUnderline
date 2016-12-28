@@ -26,9 +26,9 @@ public class InMemoryContactService extends BaseInMemoryService {
     @Subscribe
     public void getContacts(Contacts.GetContactsRequest request){
         Contacts.GetContactsResponse response =  new Contacts.GetContactsResponse();
-        response.contacts = new ArrayList<>();
+        response.Contacts = new ArrayList<>();
         for (int i=0;i <10; i++){
-            response.contacts.add(createFakeUser(i,true));
+            response.Contacts.add(createFakeUser(i,true));
         }
         postDelayed(response);
     }
@@ -45,6 +45,26 @@ public class InMemoryContactService extends BaseInMemoryService {
     @Subscribe
     public void respondToContactsRequest(Contacts.RespondToContactRequestRequest request){
         postDelayed(new Contacts.RespondToContactRequestResponse());
+    }
+
+    @Subscribe
+    public void removeContact(Contacts.RemoveContactRequest request) {
+        Contacts.RemoveContactResponse response = new Contacts.RemoveContactResponse();
+        response.RemovedContactId = request.ContactId;
+        postDelayed(response);
+    }
+
+    @Subscribe
+    public void searchUsers(Contacts.SearchUsersRequest request) {
+        Contacts.SearchUsersResponse response = new Contacts.SearchUsersResponse();
+        response.Query = request.Query;
+        response.Users = new ArrayList<>();
+
+        for (int i =0; i < request.Query.length(); i++) {
+            response.Users.add(createFakeUser(i , false));
+        }
+
+        postDelayed(response, 2000, 3000);
     }
 
     private UserDetails createFakeUser(int id, boolean isContact) {

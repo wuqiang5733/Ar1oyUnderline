@@ -9,6 +9,10 @@
         <item name="windowActionModeOverlay">true</item>
     </style>
 
+    <style name="AddContactTheme" parent="AppTheme">
+        <item name="colorPrimary">#D7CCCE</item>
+    </style>
+
     <style name="Widget.Yora.Toolbar.Spinner" parent="Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
         <item name="android:background">?android:selectableItemBackground</item>
         <item name="android:dropDownSelector">?android:selectableItemBackground</item>

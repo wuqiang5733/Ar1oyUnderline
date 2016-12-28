@@ -77,7 +77,7 @@ public class SentMessagesActivity extends BaseAuthenticatedActivity implements M
 
     @Subscribe
     public void onMessagesLoaded(final Messages.SeacrhMessagesResponse response) {
-        _progressFrame.setVisibility(View.GONE);  //把缓冲圈去掉
+        _progressFrame.setVisibility(View.GONE);
         if (!response.didSucceed()) {
             response.showErrorToast(this);
             return;
