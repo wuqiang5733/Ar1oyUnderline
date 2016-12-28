@@ -54,7 +54,7 @@ public class ContactsActivity extends BaseAuthenticatedActivity implements Adapt
 
         _currentAnimation = ObjectAnimator
                 .ofObject(toolbar, "backgroundColor", new ArgbEvaluator(), currentColor, item.getColor())
-                .setDuration(250);
+                .setDuration(249);
 
         _currentAnimation.start();
 
