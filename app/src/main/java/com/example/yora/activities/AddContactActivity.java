@@ -24,14 +24,14 @@ public class AddContactActivity extends BaseAuthenticatedActivity implements Ada
 
     private UserDetailsAdapter _adapter;
     private View _progressFrame;
-    private Handler _handler;
-    private SearchView _searchView;
-    private String _lastQuery;
+    private Handler _handler;  // 为了延时
+    private SearchView _searchView;  // Support 版本
+    private String _lastQuery;  // 要记住最后一个发送出去的 Query 是什么，因为在搜索的过程当中可以会发出去好多条查询语句
     private UserDetails _selectedUser;
 
     private Runnable searchRunnable = new Runnable() {
         @Override
-        public void run() {
+        public void run() { // 用户输入，并且停顿一会儿之后执行
             _lastQuery = _searchView.getQuery().toString();
             _progressFrame.setVisibility(View.VISIBLE);
             bus.post(new Contacts.SearchUsersRequest(_lastQuery));
@@ -55,9 +55,10 @@ public class AddContactActivity extends BaseAuthenticatedActivity implements Ada
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        // 用SearchBar代替ToolBar
         actionBar.setCustomView(_searchView);
 
-        _searchView.setIconified(false);
+        _searchView.setIconified(false); // 转换成类似ActionBar的Item，可能跟展开与关闭也有关系
         _searchView.setQueryHint("Searhc for users...");
         _searchView.setLayoutParams(new Toolbar.LayoutParams( //Layout information for child views of Toolbars
                 Toolbar.LayoutParams.MATCH_PARENT,
@@ -66,11 +67,15 @@ public class AddContactActivity extends BaseAuthenticatedActivity implements Ada
         _searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                // 这儿没有用 确定用确定键 来 触发事件，在一些情况下，
+                // 可能用户体验不是太好，也可能与用户已经养成的习惯不相符
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
+                // 这个事件是调用
+                // private Runnable searchRunnable = new Runnable() 的
                 if (query.length() < 3)
                     return true;
 
@@ -81,7 +86,7 @@ public class AddContactActivity extends BaseAuthenticatedActivity implements Ada
         });
 
         _searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
+            @Override  // 关闭搜索Item的时候
             public boolean onClose() {
                 setResult(RESULT_CANCELED);
                 finish();
