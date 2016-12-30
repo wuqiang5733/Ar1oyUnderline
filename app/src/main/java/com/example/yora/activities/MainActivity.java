@@ -1,24 +1,33 @@
 package com.example.yora.activities;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.yora.R;
 import com.example.yora.services.Contacts;
 import com.example.yora.services.Messages;
 import com.example.yora.services.entities.ContactRequest;
 import com.example.yora.services.entities.Message;
+import com.example.yora.services.entities.UserDetails;
 import com.example.yora.views.MainActivityAdapter;
 import com.example.yora.views.MainNavDrawer;
 import com.squareup.otto.Subscribe;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class MainActivity extends BaseAuthenticatedActivity implements View.OnClickListener, MainActivityAdapter.MainActivityListener {
+    private static final int REQUEST_SHOW_MESSAGE = 1;
+
     private MainActivityAdapter _adapter;
     private List<Message> _messages;
     private List<ContactRequest> _contactRequests;
@@ -59,10 +68,10 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
 
         scheduler.invokeEveryMilliseconds(new Runnable() {
             @Override
-            public void run() {  // 自动刷新
+            public void run() {
                 onRefresh();
             }
-        }, 1000 * 60 * 3);  // 每三分钟
+        }, 1000 * 60 * 3);
     }
 
     @Override
@@ -118,11 +127,72 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
 
     @Override
     public void onMessageClicked(Message message) {
-
+        Intent intent = new Intent(this, MessageActivity.class);
+        intent.putExtra(MessageActivity.EXTRA_MESSAGE, message);
+        startActivityForResult(intent, REQUEST_SHOW_MESSAGE);
     }
 
     @Override
-    public void onContactRequestClicked(ContactRequest request, int position) {
+    public void onContactRequestClicked(final ContactRequest request, final int position) {
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_user_display, null);
+        ImageView avatar = (ImageView) dialogView.findViewById(R.id.dialog_user_display_avatar);
+        TextView displayName = (TextView) dialogView.findViewById(R.id.dialog_user_display_displayName);
 
+        UserDetails user = request.getUser();
+        displayName.setText(user.getDisplayName());
+        Picasso.with(this)
+               .load(user.getAvatarUrl())
+               .into(avatar);
+
+        DialogInterface.OnClickListener clickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == Dialog.BUTTON_NEUTRAL)
+                    return;
+
+                boolean doAccept = which == dialog.BUTTON_POSITIVE;
+                _contactRequests.remove(request);
+                _adapter.notifyItemRemoved(position + 1); // count the header too
+
+                if (_contactRequests.size() == 0) {
+                    _adapter.notifyItemRemoved(0);
+                }
+
+                bus.post(new Contacts.RespondToContactRequestRequest(request.getUser().getId(), doAccept));
+            }
+        };
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Respond to Contact Request")
+                .setView(dialogView)
+                .setPositiveButton("Accept", clickListener)
+                .setNeutralButton("Cancel", clickListener)
+                .setNegativeButton("Reject", clickListener)
+                .setCancelable(false)
+                .create();
+
+        dialog.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_SHOW_MESSAGE) {
+            int messageId = data.getIntExtra(MessageActivity.RESULT_EXTRA_MESSAGE_ID, -1);
+            if (messageId == -1)
+                return;
+
+            for (int i = 0; i < _messages.size(); i++) {
+                Message message = _messages.get(i);
+                if (message.getId() == messageId) {
+                    if (resultCode == MessageActivity.RESULT_MESSAGE_DELETED) {
+                        _messages.remove(message);
+                    } else {
+                        message.setRead(true);
+                    }
+                    _adapter.notifyDataSetChanged();
+                    break;
+                }
+            }
+        }
     }
 }

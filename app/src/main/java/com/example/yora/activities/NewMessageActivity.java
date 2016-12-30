@@ -22,7 +22,7 @@ import com.example.yora.views.CameraPreview;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-// 照相机
+
 public class NewMessageActivity extends BaseAuthenticatedActivity implements View.OnClickListener, Camera.PictureCallback {
     public static final String EXTRA_CONTACT = "EXTRA_CONTACT";
 
