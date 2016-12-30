@@ -61,8 +61,40 @@ public class InMemoryMessageService extends BaseInMemoryService {
                     users[random.nextInt(users.length)],
                     isFromUs,
                     i > 4));
-
-            postDelayed(response, 2000);
         }
+
+        postDelayed(response, 2000);
+    }
+
+    @Subscribe
+    public void sendMessage(Messages.SendMessageRequest request) {
+        Messages.SendMessageResponse response = new Messages.SendMessageResponse();
+        if (request.getMessage().equals("error")) {
+            response.setOperationError("Something bad happened");
+        } else if (request.getMessage().equals("error-message")) {
+            response.setPropertyError("message", "Invalid message");
+        }
+        postDelayed(response, 1500, 3000);
+    }
+
+    @Subscribe
+    public void markMessageAsRead(Messages.MarkMessageAsReadRequest request) {
+        postDelayed(new Messages.MarkMessageAsReadResponse());
+    }
+
+    @Subscribe
+    public void getMessageDetails(Messages.GetMessageDetailsRequest request) {
+        Messages.GetMessageDetailsResponse response = new Messages.GetMessageDetailsResponse();
+        response.Message = new Message(
+                1,
+                Calendar.getInstance(),
+                "Short Message",
+                "Long Message",
+                null,
+                new UserDetails(1, true, "Display Name", "Username", ""),
+                false,
+                false);
+
+        postDelayed(response);
     }
 }

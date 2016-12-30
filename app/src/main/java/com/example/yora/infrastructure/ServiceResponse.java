@@ -5,12 +5,14 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.TreeMap;
 
 public abstract class ServiceResponse {
     private static final String TAG = "ServiceResponse";
 
     private String _operationError;
     private HashMap<String, String> _propertyErrors;
+    private TreeMap<String, String> _propertyErrorsCaseInsensitive;
     private boolean _isCritical;
 
     public ServiceResponse () {
@@ -43,12 +45,21 @@ public abstract class ServiceResponse {
         _isCritical = critical;
     }
 
+    public void setCriticalError(String criticalError) {
+        _isCritical = true;
+        _operationError = criticalError;
+    }
+
     public void setPropertyError(String property, String error) {
         _propertyErrors.put(property, error);
     }
 
     public String getPropertyError(String property) {
-        return _propertyErrors.get(property);
+        if (_propertyErrorsCaseInsensitive == null || _propertyErrorsCaseInsensitive.size() != _propertyErrors.size()) {
+            _propertyErrorsCaseInsensitive = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+            _propertyErrorsCaseInsensitive.putAll(_propertyErrors);
+        }
+        return _propertyErrorsCaseInsensitive.get(property);
     }
 
     public boolean didSucceed() {

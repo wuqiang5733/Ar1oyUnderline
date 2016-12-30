@@ -101,6 +101,10 @@ public class Message implements Parcelable {
         return _isRead;
     }
 
+    public void setRead(boolean read) {
+        _isRead = read;
+    }
+
     public boolean isSelected() {
         return _isSelected;
     }

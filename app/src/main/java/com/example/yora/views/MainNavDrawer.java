@@ -14,6 +14,7 @@ import com.example.yora.activities.SentMessagesActivity;
 import com.example.yora.infrastructure.User;
 import com.example.yora.services.Account;
 import com.squareup.otto.Subscribe;
+import com.squareup.picasso.Picasso;
 
 public class MainNavDrawer extends NavDrawer {
     private final TextView _displayNameText;
@@ -41,12 +42,16 @@ public class MainNavDrawer extends NavDrawer {
         User loggedInUser = activity.getYoraApplication().getAuth().getUser();
         _displayNameText.setText(loggedInUser.getDisplayName());
 
-        // TODO change avatar image to avatarUrl from loggedInUser
+        Picasso.with(activity)
+               .load(loggedInUser.getAvatarUrl())
+               .into(_avatarImage);
     }
 
     @Subscribe
     public void UserDetailsUpdated(Account.UserDetailsUpdatedEvent event){
-        // TODO update avatar URL
+        Picasso.with(activity)
+                .load(event.User.getAvatarUrl())
+                .into(_avatarImage);
         _displayNameText.setText(event.User.getDisplayName());
     }
 }

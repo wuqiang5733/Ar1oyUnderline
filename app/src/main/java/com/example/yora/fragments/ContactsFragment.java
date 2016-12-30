@@ -58,7 +58,6 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
         scheduler.invokeOnResume(Contacts.GetContactsResponse.class, new Runnable() {
             @Override
             public void run() {
-                response.showErrorToast(getActivity());
                 _progressFrame.animate()
                         .alpha(0)
                         .setDuration(250)
@@ -69,6 +68,11 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
                             }
                         })
                         .start();
+
+                if (!response.didSucceed()) {
+                    response.showErrorToast(getActivity());
+                    return;
+                }
 
                 _adapter.clear();
                 _adapter.addAll(response.Contacts);
