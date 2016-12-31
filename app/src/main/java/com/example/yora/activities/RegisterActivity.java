@@ -46,8 +46,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
             bus.post(new Account.RegisterRequest(
                     _userNameText.getText().toString(),
-                    _passwordText.getText().toString(),
-                    _emailText.getText().toString()));
+                    _emailText.getText().toString(),
+                    _passwordText.getText().toString()));
         }
     }
 

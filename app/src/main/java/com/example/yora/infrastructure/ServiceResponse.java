@@ -4,14 +4,21 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.HashMap;
 import java.util.TreeMap;
 
 public abstract class ServiceResponse {
     private static final String TAG = "ServiceResponse";
 
+    // GsonConverter won't pick up private fields, unless annotated with SerializedName
+    @SerializedName("operationError")
     private String _operationError;
+
+    @SerializedName("propertyErrors")
     private HashMap<String, String> _propertyErrors;
+
     private TreeMap<String, String> _propertyErrorsCaseInsensitive;
     private boolean _isCritical;
 

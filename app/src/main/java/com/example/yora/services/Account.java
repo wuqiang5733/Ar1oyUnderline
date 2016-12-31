@@ -9,7 +9,7 @@ public final class Account {
     private Account(){
     }
 
-    public static class UserResponse extends ServiceResponse {
+    public static abstract class UserResponse extends ServiceResponse {
         public int Id;
         public String AvatarUrl;
         public String DisplayName;
@@ -92,9 +92,6 @@ public final class Account {
     }
 
     public static class RegisterWithExternalTokenResponse extends UserResponse {
-    }
-
-    public static class LoginWithExternalTokenRespone extends UserResponse {
     }
 
     public static class ChangeAvatarRequest {
