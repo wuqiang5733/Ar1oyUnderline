@@ -9,7 +9,7 @@ public final class Account {
     private Account(){
     }
 
-    public static abstract class UserResponse extends ServiceResponse {
+    public static class UserResponse extends ServiceResponse {
         public int Id;
         public String AvatarUrl;
         public String DisplayName;
