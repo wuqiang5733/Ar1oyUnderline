@@ -1,6 +1,7 @@
 package com.example.yora.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,7 +44,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             _userNameText.setEnabled(false);
             _passwordText.setEnabled(false);
             _emailText.setEnabled(false);
-
+            Log.e("RegisterActivity", "L47_onClick_注册_点击注册按钮");
             bus.post(new Account.RegisterRequest(
                     _userNameText.getText().toString(),
                     _emailText.getText().toString(),
@@ -53,6 +54,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Subscribe
     public void onRegisterResponse(Account.RegisterResponse response) {
+        Log.e("RegisterActivity","L57_@Subscribe_onRegisterResponse_注册_调用onUserResponse");
         onUserResponse(response);
     }
 
@@ -62,6 +64,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void onUserResponse(Account.UserResponse response) {
+        Log.e("RegisterActivity","L67_onUserResponse_注册_转一会儿圈，然后Finish");
         _progressBar.setVisibility(View.GONE);
         _registerButton.setText(_defaultRegisterButtonText);
         _registerButton.setEnabled(true);

@@ -1,6 +1,7 @@
 package com.example.yora.services;
 
 import android.net.Uri;
+import android.util.Log;
 
 import com.example.yora.infrastructure.ServiceResponse;
 import com.example.yora.infrastructure.User;
@@ -65,6 +66,8 @@ public final class Account {
         public String ClientId;
 
         public RegisterRequest(String userName, String email, String password) {
+            Log.e("Account", "L69_RegisterRequest_注册_把从注册页面当中读取的数据放入Account下的RegisterRequest类当中");
+
             UserName = userName;
             Email = email;
             Password = password;
@@ -73,6 +76,7 @@ public final class Account {
     }
 
     public static class RegisterResponse extends UserResponse  {
+
     }
 
     public static class RegisterWithExternalTokenRequest {

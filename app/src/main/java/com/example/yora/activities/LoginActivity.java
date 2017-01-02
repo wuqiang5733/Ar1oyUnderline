@@ -2,6 +2,7 @@ package com.example.yora.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.yora.R;
@@ -21,6 +22,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Log.e("LoginActivity","onCreate_就是有四个注册按钮的那个Activity");
 
         _loginButton = findViewById(R.id.activity_login_login);
         _registerButton = findViewById(R.id.activity_login_register);

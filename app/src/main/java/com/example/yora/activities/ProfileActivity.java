@@ -18,8 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-
-
 import com.example.yora.R;
 import com.example.yora.dialogs.ChangePasswordDialog;
 import com.example.yora.infrastructure.User;
@@ -110,6 +108,7 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
 
     @Subscribe
     public void UserDetailsUpdated(Account.UserDetailsUpdatedEvent event){
+        Log.e("ProfileActivity","L111_UserDetailsUpdated_改变ActionBar上的显示，还有头像的变化");
         getSupportActionBar().setTitle(event.User.getDisplayName());
         Picasso.with(this)
                 .load(event.User.getAvatarUrl())

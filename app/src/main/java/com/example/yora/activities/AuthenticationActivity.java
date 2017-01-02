@@ -2,6 +2,7 @@ package com.example.yora.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.yora.R;
@@ -25,12 +26,15 @@ public class AuthenticationActivity extends BaseActivity {
             finish();
             return;
         }
-
+        Log.e("AuthenticationActivity","onCreate_在onCreate当中会调用bus.post(new Account.LoginWithLocalTokenRequest(_auth.getAuthToken()))");
         bus.post(new Account.LoginWithLocalTokenRequest(_auth.getAuthToken()));
+        // InMemoryAccountService : L97_@Subscribe_loginWithLocalToken
     }
 
     @Subscribe
     public void onLoginWithLocalToken(Account.LoginWithLocalTokenResponse response) {
+        // ServiceResponse --> UserResponse --> LoginWithLocalTokenResponse
+
         if (!response.didSucceed()) {
             Toast.makeText(this, "Please login again", Toast.LENGTH_SHORT).show();
             _auth.setAuthToken(null);

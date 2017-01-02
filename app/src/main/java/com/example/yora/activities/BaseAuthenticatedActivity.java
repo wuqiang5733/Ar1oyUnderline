@@ -2,13 +2,14 @@ package com.example.yora.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 public abstract class BaseAuthenticatedActivity extends BaseActivity {
 
     @Override
     protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.e("BaseAuthenActivity","onCreate");
         if (!application.getAuth().getUser().isLoggedIn()) {
             if (application.getAuth().hasAuthToken()) {
                 Intent intent = new Intent(this, AuthenticationActivity.class);

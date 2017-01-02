@@ -1,6 +1,8 @@
 package com.example.yora.services;
 
 
+import android.util.Log;
+
 import com.example.yora.infrastructure.Auth;
 import com.example.yora.infrastructure.User;
 import com.example.yora.infrastructure.YoraApplication;
@@ -92,21 +94,25 @@ public class InMemoryAccountService extends BaseInMemoryService {
 
     @Subscribe
     public void loginWithLocalToken(Account.LoginWithLocalTokenRequest request) {
+        Log.e("InMemoryAccountService","L97_@Subscribe_loginWithLocalToken");
         invokeDelayed(new Runnable() {
             @Override
             public void run() {
                 Account.LoginWithLocalTokenResponse response = new Account.LoginWithLocalTokenResponse();
                 loginUser(response);
                 bus.post(response);
+                // AuthenticationActivity : L36_@Subscribe_onLoginWithLocalToken
             }
         }, 1000, 2000);
     }
 
     @Subscribe
     public void register(Account.RegisterRequest request) {
+        Log.e("InMemoryAccountService", "L109_@Subscribe_register_注册_调用loginUser");
         invokeDelayed(new Runnable() {
             @Override
             public void run() {
+                //去往 RegisterActivity 下的 L56 onRegisterResponse ？
                 Account.RegisterResponse response = new Account.RegisterResponse();
                 loginUser(response);
                 bus.post(response);
@@ -134,7 +140,7 @@ public class InMemoryAccountService extends BaseInMemoryService {
     private void loginUser(Account.UserResponse response) {
         Auth auth = application.getAuth();
         User user = auth.getUser();
-
+        Log.e("InMemoryAccountService", "L140_loginUser_注册_从Auth当中生成一个User，设置他的Name,Email,Avatar,ID，setAuthToken，并且将其设为已经注册，调用UserDetailsUpdatedEvent(user)");
         user.setDisplayName("Dariush Lotfi");
         user.setUserName("dlotif");
         user.setEmail("me@dlotfi.ir");

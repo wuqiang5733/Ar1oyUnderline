@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,7 +38,7 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
         setContentView(R.layout.activity_main);
         getSupportActionBar().setTitle("Inbox");
         setNavDrawer(new MainNavDrawer(this));
-
+        Log.e("MainActivity","L41_onYoraCreate");
         findViewById(R.id.activity_main_newMessageButton).setOnClickListener(this);
 
         _adapter = new MainActivityAdapter(this, this);
