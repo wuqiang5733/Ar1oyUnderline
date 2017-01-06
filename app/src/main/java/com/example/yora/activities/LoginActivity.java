@@ -38,6 +38,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onClick(View view) {
+        // 检测不同的按钮启动不同的 Activity
+        // (LoginNarrowActivity，RegisterActivity，ExternalLoginActivity) ，
+        // 然后它们返回不同的请求码
+        // （REQUEST_NARROW_LOGIN，REQUEST_REGISTER，REQUEST_EXTERNAL_LOGIN）
         if (view == _loginButton) {
             startActivityForResult(new Intent(this, LoginNarrowActivity.class), REQUEST_NARROW_LOGIN);
         } else if (view == _registerButton) {
@@ -72,6 +76,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     @Override
+    // 这个是在 LoginFragment 当中触发的
     public void onLoggedIn() {
         finishLogin();
     }

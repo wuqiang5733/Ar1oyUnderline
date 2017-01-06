@@ -1,19 +1,19 @@
 package com.example.yora.fragments;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.yora.R;
 import com.example.yora.services.Account;
 import com.squareup.otto.Subscribe;
 
 public class LoginFragment extends BaseFragment implements View.OnClickListener {
+    // 从主界面（四个启动项的那个界面）的第一个启动项启动的那个 Fragment，不包括界面的头部
     private Button _loginButton;
     private EditText _userNameText;
     private EditText _passwordText;
@@ -67,9 +67,9 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        _callbacks = (Callbacks) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        _callbacks = (Callbacks) getActivity();
     }
 
     @Override

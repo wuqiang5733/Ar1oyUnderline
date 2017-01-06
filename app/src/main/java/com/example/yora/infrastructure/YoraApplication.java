@@ -15,6 +15,11 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 
 public class YoraApplication extends Application {
+    // 这个类是需要在 Manifest 当中申明的
+    // 这个类会包含一些全局性的信息，起的是 Application 的作用，User 的信息，也是这儿产生的
+    // 也就是 定制的 Application ，在 BaseActivity 当中的 onCreate Cast 了一下，
+    // 其它的 Activity 都是通过 BaseActivity 得到 YoraApplication 的全局信息的
+
     public static final Uri API_ENDPOINT = Uri.parse("http://yora-playground.3dbuzz.com");
     public static final String STUDENT_TOKEN = "ebce01083a6340a0ba557747dc233107";
 
@@ -36,6 +41,10 @@ public class YoraApplication extends Application {
         _auth = new Auth(this);
         createAuthedPicasso();
         Module.register(this);
+    }
+
+    public Auth getAuth() {
+        return _auth;
     }
 
     private void createAuthedPicasso() {
@@ -60,9 +69,7 @@ public class YoraApplication extends Application {
         return _authedPicasso;
     }
 
-    public Auth getAuth() {
-        return _auth;
-    }
+
 
     public Bus getBus() {
         return _bus;

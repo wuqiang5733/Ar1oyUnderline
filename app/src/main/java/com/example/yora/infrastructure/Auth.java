@@ -11,14 +11,14 @@ public class Auth {
     private static final String AUTH_PREFERENCES = "AUTH_PREFERENCES";
     private static final String AUTH_PREFERENCES_TOKEN = "AUTH_PREFERENCES_TOKEN";
 
-    private final Context _context;
+    private final Context _context; // final 意味着只能在 构造函数当中 初始化 ?
     private final SharedPreferences _preferences;
     private User _user;
     private String _authToken;
 
 
     public Auth(Context context) {
-        _context = context;
+        this._context = context;
         _user = new User();
         _preferences = context.getSharedPreferences(AUTH_PREFERENCES, Context.MODE_PRIVATE);
         _authToken = _preferences.getString(AUTH_PREFERENCES_TOKEN, null);

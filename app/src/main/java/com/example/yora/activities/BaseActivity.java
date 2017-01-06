@@ -32,7 +32,7 @@ public abstract class BaseActivity extends AppCompatActivity implements SwipeRef
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        application = (YoraApplication) getApplication();
+        application = (YoraApplication) getApplication();  // 定制的 Context
         bus = application.getBus();
         scheduler = new ActionScheduler(application);
 

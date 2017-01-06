@@ -15,6 +15,8 @@ import com.example.yora.activities.BaseActivity;
 
 import java.util.ArrayList;
 
+//import android.support.v4.widget.DrawerLayout;
+
 public class NavDrawer {
     private ArrayList<NavDrawerItem> _items;
     private NavDrawerItem _selectedItem;
@@ -27,9 +29,10 @@ public class NavDrawer {
         this.activity = activity;
         _items = new ArrayList<>();
         //Conventions: There should be a DrawerLayout with id drawer_layout and a ViewGroup with id nav_drawer
-        drawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
-        navDrawerView = (ViewGroup) activity.findViewById(R.id.nav_drawer);
-
+        // drawer_layout ： Inbox , Send Message , Contacts  , Profile 各有一个 drawer_layout
+        drawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout); // 每个主页的界面
+        navDrawerView = (ViewGroup) activity.findViewById(R.id.nav_drawer);// 整个抽出来的那个界面
+        // navDrawerView : 整个抽出来的那个界面
         if (drawerLayout == null || navDrawerView == null)
             throw new RuntimeException("To use this class, you must have views with the ids of drawer_layout and nav_drawer");
 
@@ -43,22 +46,28 @@ public class NavDrawer {
         });
 
         activity.getYoraApplication().getBus().register(this);
-    }
-
+    }  // 这是大类的 构造函数
+    /*
+    * 在每一个菜单当中都有这样一句： setNavDrawer(new MainNavDrawer(this));
+    * 在 MainNavDrawer 当中有这样的句子： addItem(new ActivityNavDrawerItem( MainActivity.class, "Inbox", ..... )
+    */
     public void addItem(NavDrawerItem item) {
         _items.add(item);
+        // 注意下面这个特殊的用法
+        // this 是指 ： protected NavDrawer navDrawer;
         item.navDrawer = this;
+        // this 是指 ： protected NavDrawer navDrawer;
     }
 
     public boolean isOpen() {
-        return drawerLayout.isDrawerOpen(Gravity.START);
+        return drawerLayout.isDrawerOpen(Gravity.LEFT);
     }
 
     public void setOpen(boolean isOpen) {
         if (isOpen)
-            drawerLayout.openDrawer(Gravity.START);
+            drawerLayout.openDrawer(Gravity.LEFT);
         else
-            drawerLayout.closeDrawer(Gravity.START);
+            drawerLayout.closeDrawer(Gravity.LEFT);
     }
 
     public void setSelectedItem(NavDrawerItem item){
@@ -82,16 +91,17 @@ public class NavDrawer {
 
     public static abstract class NavDrawerItem {
         protected NavDrawer navDrawer;
-
+        //navDrawerView : 整个抽出来的那个界面
         public abstract void inflate(LayoutInflater inflater, ViewGroup navDrawerView);
         public abstract void setSelected(boolean isSelected);
     }
 
     public static class BasicNavDrawerItem extends NavDrawerItem implements View.OnClickListener {
+        //        显示 text 或者 badge (如果有的话) ,还有 icon
         private String _text;
         private String _badge;
         private int _iconDrawable;
-        private int _containerId;
+        private int _containerId; // 放置 Inbox , Send Message , Contacts  , Profile 那四个位置
 
         private ImageView _icon;
         private TextView _textView;
@@ -107,11 +117,21 @@ public class NavDrawer {
         }
 
         @Override
+        // navDrawerView : 整个抽出来的那个界面，由父类传过来
+        // _containerId ： 放置 Inbox , Send Message , Contacts  , Profile 那四个位置
+        // R.layout.list_item_nave_drawer : Inbox , Send Message , Contacts  , Profile 那四个菜单上的元素
+        /*
+        *  整个这个 inflate 的作用就是：在整个抽出来的界面上，找到菜单应该在的位置，然后把菜单放上去
+        *  在 ViewGroup container 的某个地方Inflate自己，并且根据自己是还被选中，改变 Appearance
+        *  并且做好 icon , textView , badgeTextView 在横向上的对应
+        */
         public void inflate(LayoutInflater inflater, ViewGroup navDrawerView) {
             ViewGroup container = (ViewGroup) navDrawerView.findViewById(_containerId);
             if (container == null)
                 throw new RuntimeException("Nav drawer item " + _text + " could not be attached to ViewGroup. View not found.");
-
+            //  做好 icon , textView , badgeTextView 在横向上的对应
+            // 下一句，如果不加最后的false，返回的View是包括每个Item的整体。
+            // 加了false就是每个Item，所以得用addView添加到container里面。
             _view = inflater.inflate(R.layout.list_item_nave_drawer, container, false);
             container.addView(_view);
             _view.setOnClickListener(this);

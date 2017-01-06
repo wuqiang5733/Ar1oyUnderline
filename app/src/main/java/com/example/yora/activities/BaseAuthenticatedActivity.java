@@ -8,6 +8,7 @@ public abstract class BaseAuthenticatedActivity extends BaseActivity {
 
     @Override
     protected final void onCreate(Bundle savedInstanceState) {
+        // 强制必须登陆，如果没有登陆，就转到 登陆界面
         super.onCreate(savedInstanceState);
         Log.e("BaseAuthenActivity","onCreate");
         if (!application.getAuth().getUser().isLoggedIn()) {
@@ -25,7 +26,7 @@ public abstract class BaseAuthenticatedActivity extends BaseActivity {
 
         // This way if activity is replaced with LoginActivity, its onCreate method will
         // not executed, preventing useless extra proccessing.
-        onYoraCreate(savedInstanceState);
+        onYoraCreate(savedInstanceState); // 经典 ！
     }
 
     protected abstract void onYoraCreate(Bundle savedInstanceState);

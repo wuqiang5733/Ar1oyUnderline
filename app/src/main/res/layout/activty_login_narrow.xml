@@ -24,3 +24,6 @@
 
 
 </LinearLayout>
+    <!--这个是 include_login_header.xml 与 fragment_login_.xml 的结合，通过-->
+    <!--android:name="org.xuxiaoxiao.myyora.fragments.LoginFragment"-->
+    <!--把 LoginFragment 对应的 Fragment 包含进来-->

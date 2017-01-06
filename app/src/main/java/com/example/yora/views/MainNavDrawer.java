@@ -3,7 +3,6 @@ package com.example.yora.views;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.yora.R;
 import com.example.yora.activities.BaseActivity;
@@ -15,14 +14,17 @@ import com.example.yora.infrastructure.User;
 import com.example.yora.services.Account;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
-
+/*
+* 在每一个菜单当中都有这样一句： setNavDrawer(new MainNavDrawer(this));
+* 在 MainNavDrawer 当中有这样的句子： addItem(new ActivityNavDrawerItem( MainActivity.class, "Inbox", ..... )
+*/
 public class MainNavDrawer extends NavDrawer {
     private final TextView _displayNameText;
     private final ImageView _avatarImage;
 
     public MainNavDrawer(final BaseActivity activity) {
         super(activity);
-
+        //在每一个主菜单当中都有这样一句： setNavDrawer(new MainNavDrawer(this));
         addItem(new ActivityNavDrawerItem(MainActivity.class, "Inbox", null, R.drawable.ic_action_unread, R.id.include_main_nav_drawer_topItems));
         addItem(new ActivityNavDrawerItem(SentMessagesActivity.class, "Sent Messages", null, R.drawable.ic_action_send_now, R.id.include_main_nav_drawer_topItems));
         addItem(new ActivityNavDrawerItem(ContactsActivity.class, "Contacts", null, R.drawable.ic_action_group, R.id.include_main_nav_drawer_topItems));
