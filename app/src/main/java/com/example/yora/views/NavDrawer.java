@@ -55,8 +55,10 @@ public class NavDrawer {
         _items.add(item);
         // 注意下面这个特殊的用法
         // this 是指 ： protected NavDrawer navDrawer;
-        item.navDrawer = this;
-        // this 是指 ： protected NavDrawer navDrawer;
+        item.navDrawer = this; // this 是指：com.example.yora.views.MainNavDrawer
+//        Log.d("NavDrawer_activity",item.navDrawer.activity.toString());
+//        Log.d("NavDrawer_this",this.toString());
+//        Log.d("NavDrawer_drawerLayout",this.drawerLayout.toString());
     }
 
     public boolean isOpen() {
