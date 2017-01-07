@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
 * 在 MainNavDrawer 当中有这样的句子： addItem(new ActivityNavDrawerItem( MainActivity.class, "Inbox", ..... )
 */
 public class MainNavDrawer extends NavDrawer {
-    private final TextView _displayNameText;
+    private final TextView _displayNameText; // NavDrawer 上面的 头像与头像旁边的用户名之类的信息
     private final ImageView _avatarImage;
 
     public MainNavDrawer(final BaseActivity activity) {
@@ -41,7 +41,10 @@ public class MainNavDrawer extends NavDrawer {
         _displayNameText = (TextView) navDrawerView.findViewById(R.id.include_main_nav_drawer_displayName);
         _avatarImage = (ImageView) navDrawerView.findViewById(R.id.include_main_nav_drawer_avatar);
 
+        // getYoraApplication() 在 BaseActivity 当中实现
         User loggedInUser = activity.getYoraApplication().getAuth().getUser();
+        // 这个文字可以在 LoginFragment 当中的 onClick 当中设置
+        // 从 User 类当中提取文字，然后在 NavDrawer 上面显示
         _displayNameText.setText(loggedInUser.getDisplayName());
 
         Picasso.with(activity)

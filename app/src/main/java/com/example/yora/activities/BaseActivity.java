@@ -105,6 +105,7 @@ public abstract class BaseActivity extends AppCompatActivity implements SwipeRef
     }
 
     public void fadeOut(final FadeOutListener listener){
+        // 告诉 NavDrawer 采用新的 Animation
         View rootView = findViewById(android.R.id.content);
         rootView.animate()
                 .alpha(0)
@@ -136,7 +137,7 @@ public abstract class BaseActivity extends AppCompatActivity implements SwipeRef
     protected void setNavDrawer(NavDrawer navDrawer) {
         this.navDrawer = navDrawer;
         this.navDrawer.create();
-
+        // 让 NavDrawer 不要用旧的 Animation
         overridePendingTransition(0, 0);
         View rootView = findViewById(android.R.id.content);
         rootView.setAlpha(0);
@@ -146,7 +147,7 @@ public abstract class BaseActivity extends AppCompatActivity implements SwipeRef
                 .start();
     }
 
-    public Toolbar getToolbar() {
+    public Toolbar getToolbar() { // 在 NavDrawer 当中使用，设置 ToolBar的文字什么的
         return toolbar;
     }
 
@@ -159,6 +160,7 @@ public abstract class BaseActivity extends AppCompatActivity implements SwipeRef
     }
 
     public interface FadeOutListener {
+        // NavDrawer Animation
         void onFadeOutEnd();
     }
 }

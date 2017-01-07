@@ -134,6 +134,8 @@ public class NavDrawer {
             //  做好 icon , textView , badgeTextView 在横向上的对应
             // 下一句，如果不加最后的false，返回的View是包括每个Item的整体。
             // 加了false就是每个Item，所以得用addView添加到container里面。
+            // 不这么写的后果在 Video35 14 分出现
+            // 那么这个 false 是决定是返回 根 View 还是 子 View
             _view = inflater.inflate(R.layout.list_item_nave_drawer, container, false);
             container.addView(_view);
             _view.setOnClickListener(this);
