@@ -27,6 +27,7 @@ public class ChangePasswordDialog extends BaseDialogFragment implements View.OnC
         _confirmNewPassword = (EditText) dialogView.findViewById(R.id.dialog_change_password_confirmNewPassword);
 
         if (!application.getAuth().getUser().isHasPassword())
+            // 可能用 Google 登陆就不会有密码
             _currentPassword.setVisibility(View.GONE);
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity())

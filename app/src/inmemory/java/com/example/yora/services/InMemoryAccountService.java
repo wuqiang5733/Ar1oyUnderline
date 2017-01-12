@@ -27,8 +27,10 @@ public class InMemoryAccountService extends BaseInMemoryService {
                 User user = application.getAuth().getUser();
                 user.setDisplayName(request.DisplayName);
                 user.setEmail(request.Email);
-
+// 去往 ProfileActivity 当中的     public void onProfileUpdated(Account.UpdateProfileResponse response) {
                 bus.post(response);
+                // 去往 MainNavDrawer 当中的 public void UserDetailsUpdated(Account.UserDetailsUpdatedEvent event)
+// 去往 ProfileActivity 当中的               public void UserDetailsUpdated(Account.UserDetailsUpdatedEvent event)
                 bus.post(new Account.UserDetailsUpdatedEvent(user));
             }
         }, 2000, 3000);
@@ -74,7 +76,7 @@ public class InMemoryAccountService extends BaseInMemoryService {
                 if (request.UserName.equals("dariush"))
                     response.setPropertyError("userName", "Invalid username or password");
 
-                loginUser(new Account.UserResponse());
+                loginUser(new Account.UserResponse());//就在本 Activity 当中
                 bus.post(response);
             }
         }, 1000, 2000);

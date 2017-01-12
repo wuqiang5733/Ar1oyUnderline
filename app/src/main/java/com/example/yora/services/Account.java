@@ -7,6 +7,9 @@ import com.example.yora.infrastructure.ServiceResponse;
 import com.example.yora.infrastructure.User;
 
 public final class Account {
+    //这个类是不能实例化的，这个类是为了 Hold 其它类的，它存在的目的就是组织，
+    // final 与 private 就是不让实例化。
+    // 在 Java 当中也不允许一个文件当中有多个顶层类，这样做，也是为这个目的。
     private Account(){
     }
 
@@ -29,9 +32,11 @@ public final class Account {
             Password = password;
         }
     }
-
+    // 这两个对应的是 fragment_login.xml
     public static class LoginWithUserNameResponse extends ServiceResponse {
     }
+    /****************************************************************************/
+
 
     public static class LoginWithLocalTokenRequest {
         public String AuthToken;
@@ -43,6 +48,8 @@ public final class Account {
 
     public static class LoginWithLocalTokenResponse extends UserResponse {
     }
+    /****************************************************************************/
+
 
     public static class LoginWithExternalTokenRequest {
         public String Provider;
@@ -58,6 +65,8 @@ public final class Account {
 
     public static class LoginWithExternalTokenResponse extends UserResponse {
     }
+    /****************************************************************************/
+
 
     public static class RegisterRequest {
         public String UserName;
@@ -78,6 +87,8 @@ public final class Account {
     public static class RegisterResponse extends UserResponse  {
 
     }
+    /****************************************************************************/
+
 
     public static class RegisterWithExternalTokenRequest {
         public String UserName;
@@ -97,6 +108,8 @@ public final class Account {
 
     public static class RegisterWithExternalTokenResponse extends UserResponse {
     }
+    /****************************************************************************************************/
+
 
     public static class ChangeAvatarRequest {
         public Uri NewAvatarUri;
@@ -109,6 +122,8 @@ public final class Account {
     public static class ChangeAvatarResponse extends ServiceResponse {
         public String AvatarUrl;
     }
+    /****************************************************************************************************/
+
 
     public static class UpdateProfileRequest {
         public String DisplayName;
@@ -124,6 +139,8 @@ public final class Account {
         public String DisplayName;
         public String Email;
     }
+    /****************************************************************************************************/
+
 
     public static class ChangePasswordRequest {
         public String CurrentPassword;
@@ -139,6 +156,8 @@ public final class Account {
 
     public static class ChangePasswordResponse extends ServiceResponse {
     }
+    /****************************************************************************************************/
+
 
     public static class UserDetailsUpdatedEvent {
         public User User;

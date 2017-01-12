@@ -2,7 +2,6 @@ package com.example.yora.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.yora.R;
@@ -26,7 +25,6 @@ public class AuthenticationActivity extends BaseActivity {
             finish();
             return;
         }
-        Log.e("AuthenticationActivity","onCreate_在onCreate当中会调用bus.post(new Account.LoginWithLocalTokenRequest(_auth.getAuthToken()))");
         bus.post(new Account.LoginWithLocalTokenRequest(_auth.getAuthToken()));
         // InMemoryAccountService : L97_@Subscribe_loginWithLocalToken
     }
@@ -42,6 +40,7 @@ public class AuthenticationActivity extends BaseActivity {
             finish();
         }
         else {
+            // 自动登陆成功之后 。。。
             String returnTo = getIntent().getStringExtra(EXTRA_RETURN_TO_ACTIVITY);
             Intent intent = new Intent(this, MainActivity.class);
             if (returnTo != null) {

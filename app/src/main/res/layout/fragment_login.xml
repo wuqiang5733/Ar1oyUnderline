@@ -37,6 +37,8 @@
         android:layout_centerHorizontal="true"
         android:layout_alignTop="@id/fragment_login_loginButton"
         android:layout_alignBottom="@id/fragment_login_loginButton"
-        android:id="@+id/activity_login_progressBar"/>
+        android:id="@+id/activity_login_progressBar"
+        style="?android:attr/progressBarStyleInverse"
+        />
 
 </RelativeLayout>

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ProfileActivity"
-    android:id="@+id/drawer_layout">
+    tools:context=".activities.ProfileActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,75 +12,76 @@
         android:orientation="vertical">
 
         <include layout="@layout/include_toolbar" />
-
+        <!--下面这个RelativeLayout会占据整个屏幕-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="18dp">
-
+            <!--头像-->
             <ImageView
+                android:id="@+id/activity_profile_avatar"
                 android:layout_width="128dp"
                 android:layout_height="128dp"
-                android:id="@+id/activity_profile_avatar"
-                android:background="#aaa"/>
+                android:background="#aaa" />
 
             <TextView
+                android:id="@+id/activity_profile_changeAvatar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tap to change"
-                android:background="#2196F3"
-                android:textColor="#fff"
+                android:layout_alignEnd="@id/activity_profile_avatar"
+                android:layout_alignStart="@id/activity_profile_avatar"
                 android:layout_below="@id/activity_profile_avatar"
-                android:layout_alignEnd="@id/activity_profile_avatar"
-                android:layout_alignStart="@id/activity_profile_avatar"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:paddingTop="8dp"
+                android:background="#2196F3"
                 android:paddingBottom="8dp"
-                android:id="@+id/activity_profile_changeAvatar"/>
-
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:text="Tap to change"
+                android:textColor="#fff" />
+            <!--下面这个FrameLayout会覆盖上面头像与文字的部分，
+            并且里面有一个旋转进度条(ProgressBar)，所有这些是不可见的-->
             <FrameLayout
+                android:id="@+id/activity_profile_avatarProgressFrame"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#aa000000"
-                android:layout_alignTop="@id/activity_profile_avatar"
                 android:layout_alignBottom="@id/activity_profile_changeAvatar"
-                android:layout_alignStart="@id/activity_profile_avatar"
                 android:layout_alignEnd="@id/activity_profile_avatar"
-                android:id="@+id/activity_profile_avatarProgressFrame"
+                android:layout_alignStart="@id/activity_profile_avatar"
+                android:layout_alignTop="@id/activity_profile_avatar"
+                android:background="#aa000000"
                 android:clickable="true">
-
+                <!--indeterminateOnly:you're unsure how long the action will take-->
                 <ProgressBar
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:indeterminateOnly="true"/>
+                    android:indeterminateOnly="true" />
 
             </FrameLayout>
-
+<!--这是平板的布局，手机上的布局是通过软件的方式改变layout_below，layout_Top实现的-->
             <LinearLayout
+                android:id="@+id/activity_profile_textFields"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/activity_profile_avatar"
                 android:layout_marginStart="18dp"
-                android:orientation="vertical"
-                android:id="@+id/activity_profile_textFields">
+                android:layout_toEndOf="@id/activity_profile_avatar"
+                android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/activity_profile_displayName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Display Name"
                     android:layout_marginBottom="8dp"
-                    android:singleLine="true"
-                    android:id="@+id/activity_profile_displayName"/>
+                    android:hint="Display Name"
+                    android:maxLines="1" />
 
                 <EditText
+                    android:id="@+id/activity_profile_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email"
                     android:inputType="textEmailAddress"
-                    android:singleLine="true"
-                    android:id="@+id/activity_profile_email"/>
+                    android:maxLines="1"/>
 
             </LinearLayout>
 
@@ -89,6 +89,6 @@
 
     </LinearLayout>
 
-    <include layout="@layout/include_main_nav_drawer"/>
+    <include layout="@layout/include_main_nav_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

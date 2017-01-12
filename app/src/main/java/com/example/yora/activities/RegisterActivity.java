@@ -80,6 +80,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         if (response.didSucceed()) {
             setResult(RESULT_OK);
             finish();
+            return;
         }
     }
 }
