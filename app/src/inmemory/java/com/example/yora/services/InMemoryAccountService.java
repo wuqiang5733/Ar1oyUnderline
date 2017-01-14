@@ -142,7 +142,7 @@ public class InMemoryAccountService extends BaseInMemoryService {
     private void loginUser(Account.UserResponse response) {
         Auth auth = application.getAuth();
         User user = auth.getUser();
-        Log.e("InMemoryAccountService", "L140_loginUser_注册_从Auth当中生成一个User，设置他的Name,Email,Avatar,ID，setAuthToken，并且将其设为已经注册，调用UserDetailsUpdatedEvent(user)");
+//        Log.e("InMemoryAccountService", "L140_loginUser_注册_从Auth当中生成一个User，设置他的Name,Email,Avatar,ID，setAuthToken，并且将其设为已经注册，调用UserDetailsUpdatedEvent(user)");
         user.setDisplayName("Dariush Lotfi");
         user.setUserName("dlotif");
         user.setEmail("me@dlotfi.ir");

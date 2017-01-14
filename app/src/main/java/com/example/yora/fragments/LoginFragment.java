@@ -2,6 +2,7 @@ package com.example.yora.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,12 +65,15 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
 
         if (response.didSucceed())
             _callbacks.onLoggedIn();
+//        bus.post(new Account.myinterface());  // 这个是我自己改的，因为 onAttach 不执行
+
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         _callbacks = (Callbacks) getActivity();
+        Log.d("LoginFragment","onAttach");
     }
 
     @Override
