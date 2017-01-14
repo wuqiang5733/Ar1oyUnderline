@@ -73,26 +73,7 @@ public class NewMessageActivity extends BaseAuthenticatedActivity implements Vie
     }
 
     private void takePicture() {
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
-        } else {
-            _camera.takePicture(null, null, this);
-        }
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case 1:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    _camera.takePicture(null, null, this);
-                } else {
-                    Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            default:
-        }
+        _camera.takePicture(null, null, this);
     }
 
     private void switchCamera() {
@@ -100,10 +81,33 @@ public class NewMessageActivity extends BaseAuthenticatedActivity implements Vie
         establishCamera();
     }
 
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        establishCamera();
+//    }
+@Override
+public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    switch (requestCode) {
+        case 1:
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                establishCamera();
+            } else {
+                Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
+            }
+            break;
+        default:
+    }
+}
     @Override
     protected void onResume() {
         super.onResume();
-        establishCamera();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
+        } else {
+            establishCamera();
+        }
     }
 
     @Override
